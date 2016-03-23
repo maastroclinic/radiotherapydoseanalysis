@@ -49,6 +49,8 @@ classdef testCalculations < matlab.unittest.TestCase
         mismatchRtDose;
         Gtv1; Gtv2; 
         mismatchGtv1;
+        
+        BINSIZE = 0.1;
     end
     
     methods (TestClassSetup)
@@ -76,7 +78,7 @@ classdef testCalculations < matlab.unittest.TestCase
             dMin = calculateDose(Gtv.maskedData, 'min');
             verifyEqual(this, dMin, this.doseMinGtv1, 'RelTol', this.relativeError);
             
-            [ vVolume, vDose ] = calculateDvhCurve(Gtv.maskedData, 0.001, Gtv.PixelSpacing, false, Gtv.volume);
+            [ vVolume, vDose ] = calculateDvhCurve(Gtv.maskedData, this.BINSIZE, Gtv.PixelSpacing, false, Gtv.volume);
             
             v48 = calculateDvhV(vVolume, vDose, 48, true, Gtv.volume);
             verifyEqual(this, v48, this.volume48GyGtv1, 'RelTol', this.relativeError);            
@@ -106,7 +108,7 @@ classdef testCalculations < matlab.unittest.TestCase
             verifyEqual(this, dMax, this.doseMaxGtv1, 'RelTol', this.relativeError);             
             verifyGreaterThanOrEqual(this, dMax, dMean);
             
-            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv1.maskedData, 0.001, this.Gtv1.PixelSpacing, false, this.Gtv1.volume);
+            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv1.maskedData, this.BINSIZE, this.Gtv1.PixelSpacing, false, this.Gtv1.volume);
             
             v48 = calculateDvhV(vVolume, vDose, 48, true, this.Gtv1.volume);
             verifyEqual(this, v48, this.volume48GyGtv1, 'RelTol', this.relativeError);            
@@ -124,7 +126,7 @@ classdef testCalculations < matlab.unittest.TestCase
             dMin = calculateDose(this.Gtv2.maskedData, 'min');
             verifyEqual(this, dMin, this.doseMinGtv2, 'RelTol', this.relativeError);
             
-            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv2.maskedData, 0.001, this.Gtv2.PixelSpacing, false, this.Gtv2.volume);
+            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv2.maskedData, this.BINSIZE, this.Gtv2.PixelSpacing, false, this.Gtv2.volume);
             
             v48 = calculateDvhV(vVolume, vDose, 48, true, this.Gtv2.volume);
             verifyEqual(this, v48, this.volume48GyGtv2, 'RelTol', this.relativeError); 
@@ -140,7 +142,7 @@ classdef testCalculations < matlab.unittest.TestCase
             dMean = calculateDose(sum.maskedData, 'mean');
             verifyEqual(this, dMean, this.doseMeanSum, 'RelTol', this.relativeError);
             
-            [ vVolume, vDose ] = calculateDvhCurve(sum.maskedData, 0.001, sum.PixelSpacing, false, sum.volume);
+            [ vVolume, vDose ] = calculateDvhCurve(sum.maskedData, this.BINSIZE, sum.PixelSpacing, false, sum.volume);
             
             v48 = calculateDvhV(vVolume, vDose, 48, true, sum.volume);
             verifyEqual(this, v48, this.volume48GySum, 'RelTol', this.relativeError);            
