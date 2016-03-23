@@ -1,22 +1,18 @@
 %CALCULATEDVHV
 %TODO
-function [ vParam ] = calculateDvhV(doseCube, pixelSpacing, doseLimit, relative, volume)
+function [ vParam ] = calculateDvhV(vVolume, vDose, doseLimit, relative, volume)
     
      %% input parsing
-    if ~isnumeric(doseCube);
+    if ~isnumeric(vVolume);
+        throw(MException('doseToCertainVolume:InputTypeMismatch','doseCube should be numeric matrix'));
+    end
+    
+    if ~isnumeric(vDose);
         throw(MException('doseToCertainVolume:InputTypeMismatch','doseCube should be numeric matrix'));
     end
     
     if ~isnumeric(doseLimit) && length(doseLimit) == 1
         throw(MException('doseToCertainVolume:InputTypeMismatch','doseLimit should be single numeric value'));
-    end
-    
-    if ~isnumeric(pixelSpacing);
-        throw(MException('doseToCertainVolume:InputTypeMismatch','pixelSpacing should be numeric vector'));
-    end
-    
-    if length(size(doseCube)) ~= length(pixelSpacing)
-        throw(MException('doseToCertainVolume:InputDimensionMismatch','pixelSpacing should represent each doseCube dimension in a one-dimensional numeric array'));
     end
     
      if ~islogical(relative) && length(relative) == 1
@@ -33,7 +29,8 @@ function [ vParam ] = calculateDvhV(doseCube, pixelSpacing, doseLimit, relative,
     vParam = NaN;
     
     try 
-        vParam = length(find(doseCube(:) >= doseLimit)) * prod(pixelSpacing);
+        index = find((vDose(:) >= doseLimit), 1, 'first');
+        vParam = vVolume(index);
         if relative
             vParam = vParam / volume * 100;
         end

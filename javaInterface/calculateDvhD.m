@@ -1,20 +1,16 @@
 %CALCULATEDVHD
 %TODO
-function [ dParam ] = calculateDvhD(doseCube, pixelSpacing, volumeLimit, volumeLimitPercentage, volume, dosePercentage, targetPresriptionDose)
+function [ dParam ] = calculateDvhD(vVolume, vDose, volumeLimit, volumeLimitPercentage, volume, dosePercentage, targetPresriptionDose)
     
     %% input parsing
-    if ~isnumeric(doseCube);
+    if ~isnumeric(vDose);
         throw(MException('doseToCertainVolume:InputTypeMismatch','doseCube should be numeric matrix'));
     end
     
-    if ~isnumeric(pixelSpacing);
+    if ~isnumeric(vVolume);
         throw(MException('doseToCertainVolume:InputTypeMismatch','pixelSpacing should be numeric vector'));
     end
-    
-    if length(size(doseCube)) ~= length(pixelSpacing)
-        throw(MException('doseToCertainVolume:InputDimensionMismatch','pixelSpacing should represent each doseCube dimension in a one-dimensional numeric array'));
-    end
-    
+
     if ~isnumeric(volumeLimit);
         throw(MException('doseToCertainVolume:InputTypeMismatch','doseCube should be numeric matrix'));
     end
@@ -43,12 +39,7 @@ function [ dParam ] = calculateDvhD(doseCube, pixelSpacing, volumeLimit, volumeL
             volumeLimit = volume*(volumeLimit/100);
         end    
 
-        %max value is added 2 times at beginning, because zero is
-        %added before dose vector
-        doseMatrix  = doseCube(~isnan(doseCube));
-        doseVect    = sort([0; doseMatrix(:)], 'ascend');
-        volumeVect  = [volume, volume:-prod(pixelSpacing):prod(pixelSpacing)];
-        dParam         = doseVect(find(volumeVect <= volumeLimit, 1,'first'));
+        dParam = vDose(find(vVolume <= volumeLimit, 1,'first'));
         %take the first one because they all have the dose criteria
 
         if dosePercentage
