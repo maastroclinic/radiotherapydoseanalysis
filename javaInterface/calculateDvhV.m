@@ -1,15 +1,41 @@
-%IN: roiDose   | RoiDose | custom made matlab object
-%    doseLimit | Double | in Gy
-%    absolute  | Bool   | true/false
-%OUT: vParam   | Double | value in cc or %
-function [ vParam ] = calculateDvhV(roiDose, doseLimit, absolute)
+%CALCULATEDVHV
+%TODO
+function [ vParam ] = calculateDvhV(doseCube, pixelSpacing, doseLimit, relative, volume)
+    
+     %% input parsing
+    if ~isnumeric(doseCube);
+        throw(MException('doseToCertainVolume:InputTypeMismatch','doseCube should be numeric matrix'));
+    end
+    
+    if ~isnumeric(doseLimit) && length(doseLimit) == 1
+        throw(MException('doseToCertainVolume:InputTypeMismatch','doseLimit should be single numeric value'));
+    end
+    
+    if ~isnumeric(pixelSpacing);
+        throw(MException('doseToCertainVolume:InputTypeMismatch','pixelSpacing should be numeric vector'));
+    end
+    
+    if length(size(doseCube)) ~= length(pixelSpacing)
+        throw(MException('doseToCertainVolume:InputDimensionMismatch','pixelSpacing should represent each doseCube dimension in a one-dimensional numeric array'));
+    end
+    
+     if ~islogical(relative) && length(relative) == 1
+        throw(MException('calculateDvhCurve:InputTypeMismatch','relative should be single logical'));
+    end
+    
+    if relative
+        if ~isnumeric(volume) && length(volume) == 1
+            throw(MException('calculateDvhCurve:InputTypeMismatch','volume should be single numeric value'));
+        end
+    end
+    
+    %% processing
     vParam = NaN;
     
     try 
-        if absolute
-            vParam = roiDose.volumeWithDoseOf(doseLimit);
-        else
-            vParam = roiDose.volumePercentageWithDoseOf(doseLimit);
+        vParam = length(find(doseCube(:) >= doseLimit)) * prod(pixelSpacing);
+        if relative
+            vParam = vParam / volume * 100;
         end
     catch EM
         warning('calculateDvhV:calculationError', EM.message)
