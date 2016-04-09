@@ -26,24 +26,33 @@ function [ vVolume, vDose ] = calculateDvhCurve(doseCube, binSize, pixelSpacing,
     
     %% processing
     try 
-        vVolume = NaN;
-        vDose   = NaN;
-
         doseCube = doseCube(~isnan(doseCube));
-        sortedDose = sort([0; doseCube(:)], 'ascend');
-        vDose   = (0:binSize:max(max(max(doseCube)))+binSize); %sortedDose(end)?
+        sortedDose = sort(doseCube(:), 'ascend');
+        
+        %sortedDose = sort([0; doseCube(:)], 'ascend');
+        %very hard because this is a physics thing, but in my theoretical unit test
+        % the 0 resulted in an error, because an addition voxel is created.
+        % want to leave this in for documentation purposes!
+        
+        vDose   = (0:binSize:(sortedDose(end)+binSize));
         vVolume = zeros(length(vDose),1);
 
-        for i = 1 : length(vDose)
-            tmp = find(sortedDose >= vDose(i));
-            vVolume(i) = (length(tmp)*prod(pixelSpacing));
+        voxelCount = 0;
+        for i = length(vDose):-1:1
+            newVoxelList = find(sortedDose >= vDose(i));
+            voxelCount = voxelCount + (length(newVoxelList));
+            vVolume(i) = voxelCount;
+            sortedDose(newVoxelList) = [];
         end
+        vVolume = vVolume .* prod(pixelSpacing);
         
         if relative
             vVolume = vVolume / volume * 100;
         end
     catch EM
-        warning('calculateDvhCurve:calculationError', EM.message)
+        warning('calculateDvhCurve:calculationError', EM.message);
+        vVolume = NaN;
+        vDose   = NaN;
     end
 end
 

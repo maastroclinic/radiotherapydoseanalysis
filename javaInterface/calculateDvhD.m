@@ -1,6 +1,7 @@
 %CALCULATEDVHD
 %TODO
 function [ dParam ] = calculateDvhD(vVolume, vDose, volumeLimit, volumeLimitPercentage, volume, dosePercentage, targetPresriptionDose)
+    dParam = NaN;
     
     %% input parsing
     if ~isnumeric(vDose);
@@ -19,7 +20,7 @@ function [ dParam ] = calculateDvhD(vVolume, vDose, volumeLimit, volumeLimitPerc
         throw(MException('doseToCertainVolume:InputTypeMismatch','volumeLimitPercentage should be true/false'));
     end
     
-    if ~isnumeric(volume) && length(volume) == 1
+    if ~isnumeric(volume) && ~isempty(volume) && length(volume) == 1
         throw(MException('doseToCertainVolume:InputTypeMismatch','volume should be double'));
     end
     

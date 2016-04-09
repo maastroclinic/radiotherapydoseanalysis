@@ -3,7 +3,7 @@ classdef testCalculations < matlab.unittest.TestCase
     properties
 
         % Locations of test files
-        BasePath = 'D:\TestData\12345'
+        BasePath = 'D:\TestData\12345';
         RTStructFile = '\FO-4073997332899944647.dcm';
         RTDoseFile   = '\FO-3153671375338877408_v2.dcm';
         
@@ -50,7 +50,7 @@ classdef testCalculations < matlab.unittest.TestCase
         Gtv1; Gtv2; 
         mismatchGtv1;
         
-        BINSIZE = 0.1;
+        BINSIZE = 0.001;
     end
     
     methods (TestClassSetup)
@@ -79,7 +79,7 @@ classdef testCalculations < matlab.unittest.TestCase
             verifyEqual(this, dMin, this.doseMinGtv1, 'RelTol', this.relativeError);
             
             [ vVolume, vDose ] = calculateDvhCurve(Gtv.maskedData, this.BINSIZE, Gtv.PixelSpacing, false, Gtv.volume);
-            
+
             v48 = calculateDvhV(vVolume, vDose, 48, true, Gtv.volume);
             verifyEqual(this, v48, this.volume48GyGtv1, 'RelTol', this.relativeError);            
             
