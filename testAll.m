@@ -5,7 +5,9 @@ addpath(genpath('tests'));
 %ADD PATH TO DICOM UTILITIES MATLAB HERE!
 % https://dev-git.maastro.nl/projects/DIU/repos/dicomutilitiesmatlab
 addpath(genpath('..\DicomUtilitiesMatlab'));
-addpath(genpath('..\dicom-file-interface')); 
+addpath('..\dicom-file-interface\classes'); 
+addpath('..\dicom-file-interface\dependencies'); 
+addpath('..\dicom-file-interface\functions');
 
 
 %%
