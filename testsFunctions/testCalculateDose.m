@@ -1,4 +1,4 @@
-classdef testImageDataStatistics < matlab.unittest.TestCase
+classdef testCalculateDose < matlab.unittest.TestCase
   properties
         image1;
         image2;
@@ -35,10 +35,10 @@ classdef testImageDataStatistics < matlab.unittest.TestCase
     end
     
     methods(Test)
-        function testValues(this)
-            value1 = imageDataStatistics(this.image1, 'min');
-            value2 = imageDataStatistics(this.image2, 'max');
-            value3 = imageDataStatistics(this.image3, 'mean');
+        function testCalculatesDoses(this)
+            value1 = calculateDose(this.image1, 'min');
+            value2 = calculateDose(this.image2, 'max');
+            value3 = calculateDose(this.image3, 'mean');
             
             verifyEqual(this, value1, this.REF_VALUE1, 'RelTol', this.RELATIVE_TOLLERANCE);
             verifyEqual(this, value2, this.REF_VALUE2, 'RelTol', this.RELATIVE_TOLLERANCE);
@@ -47,22 +47,19 @@ classdef testImageDataStatistics < matlab.unittest.TestCase
         
         function testInvalidInputs(this)
             try
-                imageDataStatistics('derp', 'min');
+                calculateDose('derp', 'min');
             catch EM
-                verifyEqual(this, 'imageDataStatistics:InputTypeMismatch', EM.identifier);
+                verifyEqual(this, 'calculateDose:InputTypeMismatch', EM.identifier);
             end
             
             try
-                imageDataStatistics(this.image1, 1);
+                calculateDose(this.image1, 1);
             catch EM
-                verifyEqual(this, 'imageDataStatistics:InputTypeMismatch', EM.identifier);
+                verifyEqual(this, 'calculateDose:InputTypeMismatch', EM.identifier);
             end
             
-            try
-                imageDataStatistics(this.image1, 'derp');
-            catch EM
-                verifyEqual(this, 'imageDataStatistics:InvalidInput', EM.identifier);
-            end
+            value = calculateDose(this.image1, 'derp');
+            verifyEqual(this, value, NaN)
         end
     end
 end

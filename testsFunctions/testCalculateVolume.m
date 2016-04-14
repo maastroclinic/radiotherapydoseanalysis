@@ -1,4 +1,4 @@
-classdef testCalculateBitmaskVolume < matlab.unittest.TestCase
+classdef testCalculateVolume < matlab.unittest.TestCase
  
     properties
         bitmask1;
@@ -25,10 +25,10 @@ classdef testCalculateBitmaskVolume < matlab.unittest.TestCase
     
     methods(Test)
         function testCalculateVolumes(this)
-            value1 = calculateBitmaskVolume(this.bitmask1, this.SPACING1);
-            value2 = calculateBitmaskVolume(this.bitmask1, this.SPACING2);
-            value3 = calculateBitmaskVolume(this.bitmask2, this.SPACING1);
-            value4 = calculateBitmaskVolume(this.bitmask2, this.SPACING2);
+            value1 = calculateVolume(this.bitmask1, this.SPACING1);
+            value2 = calculateVolume(this.bitmask1, this.SPACING2);
+            value3 = calculateVolume(this.bitmask2, this.SPACING1);
+            value4 = calculateVolume(this.bitmask2, this.SPACING2);
             
             verifyEqual(this, value1, this.REF_VALUE1, 'RelTol', this.RELATIVE_TOLLERANCE);
             verifyEqual(this, value2, this.REF_VALUE2, 'RelTol', this.RELATIVE_TOLLERANCE);
@@ -38,21 +38,21 @@ classdef testCalculateBitmaskVolume < matlab.unittest.TestCase
         
         function testInvalidInputs(this)
             try
-                calculateBitmaskVolume('derp', []);
+                calculateVolume('derp', []);
             catch EM
-                verifyEqual(this, 'calculateBitmaskVolume:InputTypeMismatch', EM.identifier);
+                verifyEqual(this, 'calculateVolume:InputTypeMismatch', EM.identifier);
             end
 
             try
-                calculateBitmaskVolume(this.bitmask1, 'derp');
+                calculateVolume(this.bitmask1, 'derp');
             catch EM
-                verifyEqual(this, 'calculateBitmaskVolume:InputTypeMismatch', EM.identifier);
+                verifyEqual(this, 'calculateVolume:InputTypeMismatch', EM.identifier);
             end
             
             try
-                calculateBitmaskVolume(this.bitmask1, [1,1]);
+                calculateVolume(this.bitmask1, [1,1]);
             catch EM
-                verifyEqual(this, 'calculateBitmaskVolume:InputDimensionMismatch', EM.identifier);
+                verifyEqual(this, 'calculateVolume:InputDimensionMismatch', EM.identifier);
             end
         end
     end
