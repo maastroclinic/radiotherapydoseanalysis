@@ -10,21 +10,21 @@
     </parent>
 
     <scm>
-        <developerConnection>scm:git:http://fs-bitbucket-01/scm/dlra/dicom-computation.git</developerConnection>
-        <url>https://fs-bitbucket-01/scm/dlra/dicom-computation.git</url>
+        <developerConnection>scm:git:http://fs-bitbucket-01/scm/diu/radiotherapy-dose-analysis.git</developerConnection>
+        <url>https://fs-bitbucket-01/scm/diu/radiotherapy-dose-analysis.git</url>
         <tag>HEAD</tag>
     </scm>
 
     <properties>
         <!-- as configured in matlab -->
         <matlab.jar.package>roiCalculationLibrary</matlab.jar.package>
-        <matlab.jar.name>DicomComputation.jar</matlab.jar.name>
+        <matlab.jar.name>calculateDose.jar</matlab.jar.name>
     </properties>
 
     <!-- bamboo project including prefix nl.maastro -->
-    <groupId>nl.maastro.dlra</groupId>
-    <artifactId>dicom-computation</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <groupId>nl.maastro</groupId>
+    <artifactId>radiotherapydoseanalysis</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <description />
     
     <build>
