@@ -3,7 +3,7 @@ classdef testCalculations < matlab.unittest.TestCase
     properties
 
         % Locations of test files
-        BasePath = 'D:\TestData\12345';
+        BasePath = '\\dev-build.maastro.nl\testdata\DIU\dicomutilitiesmatlab';
         RTStructFile = '\FO-4073997332899944647.dcm';
         RTDoseFile   = '\FO-3153671375338877408_v2.dcm';
         
