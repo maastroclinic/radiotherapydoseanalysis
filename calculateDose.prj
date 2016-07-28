@@ -28,7 +28,7 @@
       <item>35000</item>
       <item>35010</item>
     </param.required.mcr.products>
-    <param.namespace>nl.maastro</param.namespace>
+    <param.namespace>nl.maastro.calculateDose</param.namespace>
     <param.classorg />
     <param.web.mcr>false</param.web.mcr>
     <param.package.mcr>false</param.package.mcr>
