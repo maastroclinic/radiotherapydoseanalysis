@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="D:\sourcecode\tim\radiotherapy-dose-analysis\calculateDose.prj" location="D:\sourcecode\tim\radiotherapy-dose-analysis" name="calculateDose" target="target.ezdeploy.library" target-name="Library Compiler">
+  <configuration file="${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose.prj" location="${PROJECT_ROOT}\radiotherapy-dose-analysis" name="calculateDose" target="target.ezdeploy.library" target-name="Library Compiler">
     <param.appname>calculateDose</param.appname>
     <param.icon />
     <param.icons />
@@ -28,7 +28,7 @@
       <item>35000</item>
       <item>35010</item>
     </param.required.mcr.products>
-    <param.namespace />
+    <param.namespace>nl.maastro</param.namespace>
     <param.classorg />
     <param.web.mcr>false</param.web.mcr>
     <param.package.mcr>false</param.package.mcr>
@@ -47,7 +47,7 @@
     <param.net.tsa.enable>false</param.net.tsa.enable>
     <param.net.tsa.assembly />
     <param.net.tsa.interface />
-    <param.net.tsa.namespace />
+    <param.net.tsa.namespace>nl.maastro</param.net.tsa.namespace>
     <param.net.tsa.superclass>DoseAnalyzer</param.net.tsa.superclass>
     <param.net.tsa.metadata />
     <param.net.tsa.metadata.assembly>C:\Users\tim.hendriks\Documents\MATLAB</param.net.tsa.metadata.assembly>
@@ -71,7 +71,6 @@
       <param.user.defined.mcr.options />
       <param.embed.ctf />
       <param.support.packages />
-      <param.namespace />
       <param.classorg />
       <param.package.mcr />
       <param.no.mcr />
@@ -96,56 +95,55 @@
       <param.net.saved.interface />
     </unset>
     <fileset.exports>
-      <file>${PROJECT_ROOT}\javaInterface\calculateDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
       <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\calculateDvhD.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\calculateDvhV.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\calculateVolume.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\createCombinedRoiDose.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\createCombinedRoiImage.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\createMatlabDicomObjects.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\createMatlabSerializedRoiObj.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
         <entity.class name="DoseAnalyzer">
-          <file>${PROJECT_ROOT}\javaInterface\calculateDose.m</file>
           <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\calculateDvhD.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\calculateDvhV.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\calculateVolume.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\createCombinedRoiDose.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\createCombinedRoiImage.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\createMatlabDicomObjects.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\createMatlabSerializedRoiObj.m</file>
+        </entity.class>
+        <entity.class name="VoiCreator">
+          <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
         </entity.class>
       </entity.package>
     </fileset.classes>
     <fileset.resources />
     <fileset.depfun>
-      <file>${PROJECT_ROOT}\dicom-file-interface\classes\CalculationGrid.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\classes\Ct.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\classes\Image.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\classes\RtDose.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\classes\RtStruct.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\dependencies\structfind.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\deprecated\equalDoubleArray.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\deprecated\nanmax.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\deprecated\nanmean.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\deprecated\nanmin.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\deprecated\nansum.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\Generate3DGrid.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\Interpolate3D.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\read_dicomct.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\read_dicomrtdose.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\read_dicomrtstruct.m</file>
-      <file>${PROJECT_ROOT}\dicomutilitiesmatlab\VolumeResample.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageFromContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createVolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\matchImageRepresentation.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\createImageFromRtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\RtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\Contour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\ContourSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\RtStruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmax.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmean.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmin.m</file>
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="doc" optional="false">D:\sourcecode\tim\radiotherapy-dose-analysis\calculateDose\for_testing\doc</file>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="calculateDose.jar" optional="false">D:\sourcecode\tim\radiotherapy-dose-analysis\calculateDose\for_testing\calculateDose.jar</file>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="readme.txt" optional="true">D:\sourcecode\tim\radiotherapy-dose-analysis\calculateDose\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="doc" optional="false">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\doc</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="readme.txt" optional="true">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="maastro.jar" optional="false">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\maastro.jar</file>
     </build-deliverables>
     <workflow />
     <matlab>
