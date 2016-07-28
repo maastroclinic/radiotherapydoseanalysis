@@ -141,8 +141,6 @@
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="doc" optional="false">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\doc</file>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="readme.txt" optional="true">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\readme.txt</file>
       <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="calculateDose.jar" optional="false">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\calculateDose.jar</file>
     </build-deliverables>
     <workflow />
