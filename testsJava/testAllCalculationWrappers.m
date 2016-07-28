@@ -3,13 +3,23 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         
         % Locations of test files
         % BasePath should be the path to the folder containing the CT, RTSTRUCT and RTDOSE folders
-        BasePath = 'D:\TestData\12345'
+        BasePath = '\\dev-build.maastro.nl\testdata\DIU\dicomutilitiesmatlab';
         % Filenames should hold the filename of the RTSTRUCT file and RTDOSE file
         RTStructFile = 'FO-4073997332899944647.dcm';
         RTDoseFile   = 'FO-3153671375338877408_v2.dcm';
         RTPlanFile   = 'FO-3630512758406762316.dcm';
-        REF_DVH      = 'refDvhVector.mat'
-
+        
+        ctJava = [];
+        pathCt = [];
+        pathDose = [];
+        pathStruct = [];
+        referenceImage = [];
+        vois = [];
+        referenceDose = [];
+        gtv1Dvh = [];
+        gtv1plus2Dvh = [];
+        gtv2min1Dvh = [];
+        
         %wrapper operation instructions
         V_LIMIT = 48;
         D_LIMIT = 2;
@@ -52,78 +62,66 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         % Required for setup
         wrapperData;
         wrapperDataNoDose;
-        
-        gtv1;
-        gtv1plus2;
-        gtv2min1;
     end
     
     methods (TestClassSetup)
-        function setupOnce(me)
-            ctJava     = mockJavaCtProperties(fullfile(me.BasePath, 'CT'));  
-            pathDose   = fullfile(me.BasePath, 'RTDOSE' , me.RTDoseFile);
-            pathStruct = fullfile(me.BasePath, 'RTSTRUCT' , me.RTStructFile);
+        function setupOnce(me)       
+            me.ctJava = mockJavaCtProperties(fullfile(me.BasePath, 'CT'));
+            me.pathCt =     fullfile(me.BasePath, 'CT');
+            me.pathDose   = fullfile(me.BasePath, 'RTDOSE' , me.RTDoseFile);
+            me.pathStruct = fullfile(me.BasePath, 'RTSTRUCT' , me.RTStructFile);
+            me.referenceImage = createImageFromCtProperties(me.ctJava);
             
-            me.wrapperData = createMatlabDicomObjects(pathStruct, pathDose, ctJava, {'GTV-1', 'GTV-2'});
-            
-            me.gtv1 = createCombinedRoiDose(me.wrapperData, {'GTV-1'}, []);
-            me.gtv1plus2 = createCombinedRoiDose(me.wrapperData, {'GTV-1', 'GTV-2'}, {'+'});
-            me.gtv2min1 = createCombinedRoiDose(me.wrapperData, {'GTV-2', 'GTV-1'}, {'-'});
+            me.vois = createVoiMap(me.pathStruct, ...
+                            me.referenceImage, ...
+                            {'GTV-1','GTV-2'});
+            me.referenceDose = createReferenceDose(me.pathDose, ...
+                                                 me.referenceImage);
+                                             
+            gtv1Dose = createImageDataForVoi(me.vois('GTV-1'), ...
+                                              me.referenceDose);
+            me.gtv1Dvh = DoseVolumeHistogram(gtv1Dose, 0.00001);
+            gtv1plus2Dose = createImageDataForVoi(addVois(me.vois('GTV-1'),me.vois('GTV-2')), ...
+                                  me.referenceDose);
+            me.gtv1plus2Dvh = DoseVolumeHistogram(gtv1plus2Dose, 0.00001);
+            gtv2min1Dose = createImageDataForVoi(subtractVois(me.vois('GTV-2'),me.vois('GTV-1')), ...
+                                  me.referenceDose);
+            me.gtv2min1Dvh = DoseVolumeHistogram(gtv2min1Dose, 0.00001);
         end
     end    
     
     methods(Test)
         
 		function testCalculateVolume(me)
-            verifyEqual(me, calculateVolume(me.gtv1), me.volumeGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateVolume(me.gtv1plus2), me.volumeSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateVolume(me.gtv2min1), me.volumeDifference, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1Dvh.volume, me.volumeGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1plus2Dvh.volume, me.volumeSum, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv2min1Dvh.volume, me.volumeDifference, 'RelTol', me.relativeError);
         end
         
         function testCalculateDose(me)
-            verifyEqual(me, calculateDose(me.gtv1, 'min'), me.doseMinGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv1plus2, 'min'), me.doseMinSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv2min1, 'min'), me.doseMinDifference, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1Dvh.minDose, me.doseMinGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1plus2Dvh.minDose, me.doseMinSum, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv2min1Dvh.minDose, me.doseMinDifference, 'RelTol', me.relativeError);
             
-            verifyEqual(me, calculateDose(me.gtv1, 'mean'), me.doseMeanGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv1plus2, 'mean'), me.doseMeanSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv2min1, 'mean'), me.doseMeanDifference, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1Dvh.meanDose, me.doseMeanGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1plus2Dvh.meanDose, me.doseMeanSum, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv2min1Dvh.meanDose, me.doseMeanDifference, 'RelTol', me.relativeError);
             
-            verifyEqual(me, calculateDose(me.gtv1, 'max'), me.doseMaxGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv1plus2, 'max'), me.doseMaxSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(me.gtv2min1, 'max'), me.doseMaxDifference, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1Dvh.maxDose, me.doseMaxGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv1plus2Dvh.maxDose, me.doseMaxSum, 'RelTol', me.relativeError);
+            verifyEqual(me, me.gtv2min1Dvh.maxDose, me.doseMaxDifference, 'RelTol', me.relativeError);
         end
         
         function testCalculateDvhV(me)
-            verifyEqual(me, calculateDvhV(me.gtv1, me.V_LIMIT, false), me.volume48GyGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhV(me.gtv1plus2, me.V_LIMIT, false), me.volume48GySum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhV(me.gtv2min1, me.V_LIMIT, false), me.volume48GyDifference, 'RelTol', me.relativeError);
+            verifyEqual(me, calculateDvhV(me.gtv1Dvh, me.V_LIMIT, true), me.volume48GyGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, calculateDvhV(me.gtv1plus2Dvh, me.V_LIMIT, true), me.volume48GySum, 'RelTol', me.relativeError);
+            verifyEqual(me, calculateDvhV(me.gtv2min1Dvh, me.V_LIMIT, true), me.volume48GyDifference, 'RelTol', me.relativeError);
         end
         
-        function testCalculateDvhD(me)
-            verifyEqual(me, calculateDvhD(me.gtv1, me.D_LIMIT, '%', [], true), me.dose2PercentGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhD(me.gtv1plus2, me.D_LIMIT, '%', [], true), me.dose2PercentSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhD(me.gtv2min1, me.D_LIMIT, '%', [], true), me.dose2PercentDifference, 'RelTol', me.relativeError);
-        end
-        
-        function testDvhCurve(me)
-            [vVolume, vDose] = calculateDvhCurve(me.gtv1, me.DVH_BINSIZE, false);
-            ref = load(fullfile(me.BasePath, me.REF_DVH));
-            
-            %TODO, this test should be better, but because a total test
-            %patient recode is planned i will save time now
-            verifyEqual(me, vVolume, ref.out{1}.volumeVector, 'RelTol', me.relativeError);
-            verifyEqual(me, vDose, ref.out{1}.doseVector, 'RelTol', me.relativeError);
-        end
-        
-        function testObjectExport(me)
-            path = createMatlabSerializedRoiObj(me.gtv1,[]);
-            obj = load(path);
-            Gtv = obj.roiObj;
-            
-            verifyEqual(me, calculateVolume(Gtv), me.volumeGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDose(Gtv, 'min'), me.doseMinGTV1, 'RelTol', me.relativeError);
-            delete(path);
+        function testCalculateDvhD(me)  
+            verifyEqual(me, calculateDvhD(me.gtv1Dvh, me.D_LIMIT, '%', []), me.dose2PercentGTV1, 'RelTol', me.relativeError);
+            verifyEqual(me, calculateDvhD(me.gtv1plus2Dvh, me.D_LIMIT, '%', []), me.dose2PercentSum, 'RelTol', me.relativeError);
+            verifyEqual(me, calculateDvhD(me.gtv2min1Dvh, me.D_LIMIT, '%', []), me.dose2PercentDifference, 'RelTol', me.relativeError);
         end
     end
 end
