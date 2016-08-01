@@ -5,11 +5,7 @@
 %   See also ROIDOSE, RTDOSE, CT, CALCULATIONGRID.
 %   Software Development Team MAASTRO CLinic.
 function referenceDose = createReferenceDose(pathDose, referenceImage)    
-    if exist(pathDose, 'file')
-        dose = RtDose(pathDose, false);
-        doseImage = createImageFromRtDose(dose);
-        referenceDose = matchImageRepresentation(doseImage, referenceImage);
-    else
-        referenceDose = [];
-    end
+    dose = RtDose(pathDose, false);
+    doseImage = createImageFromRtDose(dose);
+    referenceDose = matchImageRepresentation(doseImage, referenceImage);
 end
