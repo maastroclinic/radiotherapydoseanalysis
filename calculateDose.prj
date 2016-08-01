@@ -102,6 +102,24 @@
       <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
       <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
+            <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageFromContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createVolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\matchImageRepresentation.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\createImageFromRtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\RtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\Contour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\ContourSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\RtStruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmax.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmean.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmin.m</file>
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
