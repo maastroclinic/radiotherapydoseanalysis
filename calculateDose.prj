@@ -95,8 +95,20 @@
       <param.net.saved.interface />
     </unset>
     <fileset.exports>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Series\Series.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Study\Study.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\utils\moveDataToNewFolder.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
       <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
       <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
@@ -106,7 +118,19 @@
     <fileset.classes>
       <entity.package name="">
         <entity.class name="DoseAnalyzer">
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
           <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\utils\moveDataToNewFolder.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Series\Series.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Study\Study.m</file>
         </entity.class>
         <entity.class name="VoiCreator">
           <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
@@ -118,13 +142,42 @@
         </entity.class>
       </entity.package>
     </fileset.classes>
-    <fileset.resources>
-      <file>${PROJECT_ROOT}\dicom-file-interface</file>
-    </fileset.resources>
-    <fileset.depfun />
+    <fileset.resources />
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\filesUnderFolders.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getCtScanForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtDoseForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtStructForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtScan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageFromContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createVolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\matchImageRepresentation.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\createImageFromRtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\RtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\Contour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\ContourSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\RtStruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\isFieldClass.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmax.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmean.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmin.m</file>
+    </fileset.depfun>
     <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="calculateDose.jar" optional="false">${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose\for_testing\calculateDose.jar</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="doc" optional="false">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\doc</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="calculateDose.jar" optional="false">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\calculateDose.jar</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="readme.txt" optional="true">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
