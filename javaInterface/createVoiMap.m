@@ -20,13 +20,14 @@ function vois = createVoiMap(pathStruct, ...
 
     struct = RtStruct(pathStruct, true);
 
-    j = 0;
-    vois = containers.Map;
+    j = 1;
+    vois = [];
     for i = 1:length(volumeNames)
         try
             contour = createContour(struct, volumeNames{i});
             voi = createVolumeOfInterest(contour, referenceImage);
-            vois(volumeNames{i}) = voi;
+            vois(j).name = volumeNames{i};
+            vois(j).voi = voi;
             j = j + 1;
         catch
             warning('dataWrapper:rtStruct', ['Could not generate bitmask for ROI ' volumeNames{i}])

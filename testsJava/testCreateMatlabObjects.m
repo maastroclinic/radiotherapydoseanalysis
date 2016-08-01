@@ -7,9 +7,9 @@ classdef testCreateMatlabObjects < matlab.unittest.TestCase
         RTStructFile = 'FO-4073997332899944647.dcm';
         RTDoseFile   = 'FO-3153671375338877408_v2.dcm';
 
-        NO_STRUCT  = uint64(0);
-        ONE_STRUCT = uint64(1);
-        TWO_STRUCT = uint64(2);
+        NO_STRUCT  = 0;
+        ONE_STRUCT = 1;
+        TWO_STRUCT = 2;
         
         ctJava = [];
         pathCt = [];
@@ -32,32 +32,32 @@ classdef testCreateMatlabObjects < matlab.unittest.TestCase
     methods(Test)
         function testJavaCtProperties(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'GTV-1'});
-            verifyEqual(me, vois.Count, me.ONE_STRUCT);
+            verifyEqual(me, size(vois,2), me.ONE_STRUCT);
         end
         
         function testCtObject(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'GTV-1'});
-            verifyEqual(me, vois.Count, me.ONE_STRUCT);
+            verifyEqual(me, size(vois,2), me.ONE_STRUCT);
         end
         
         function testCtPath(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'GTV-1'});
-            verifyEqual(me, vois.Count, me.ONE_STRUCT);
+            verifyEqual(me, size(vois,2), me.ONE_STRUCT);
         end
                 
 		function testGetMultiple(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'GTV-1', 'GTV-2'});
-            verifyEqual(me, vois.Count, me.TWO_STRUCT);
+            verifyEqual(me, size(vois,2), me.TWO_STRUCT);
         end
         
         function testRoiNotFoundSingle(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'DERP'});
-            verifyEqual(me, vois.Count, me.NO_STRUCT);
+            verifyEqual(me, size(vois,2), me.NO_STRUCT);
         end
         
         function testRoiNotFoundMultiple(me)
             vois = createVoiMap(me.pathStruct, me.referenceImage, {'DERP', 'GTV-1'});
-            verifyEqual(me, vois.Count, me.ONE_STRUCT);
+            verifyEqual(me, size(vois,2), me.ONE_STRUCT);
         end
         
         function testErrorNoStruct(me)
@@ -66,7 +66,6 @@ classdef testCreateMatlabObjects < matlab.unittest.TestCase
             catch EM
                 verifyEqual(me, 'matlabData:MissingParamater', EM.identifier);
             end
-            
         end
         
         function testErrorNoVolumes(me)
