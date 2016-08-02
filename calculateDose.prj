@@ -118,7 +118,7 @@
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
-        <entity.class name="DoseAnalyzer">
+        <entity.class name="VoiCreator">
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
           <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
@@ -133,8 +133,6 @@
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Series\Series.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Study\Study.m</file>
-        </entity.class>
-        <entity.class name="VoiCreator">
           <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
