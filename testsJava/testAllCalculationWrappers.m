@@ -83,7 +83,6 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
             me.gtv1Dvh = DoseVolumeHistogram(gtv1Dose, 0.00001);
             gtv1plus2Dose = createImageDataForVoi(addVois(me.vois(1).voi,me.vois(2).voi), ...
                                   me.referenceDose);
-            calculateDvhCurve(gtv1plus2Dose, 0.00001, false);
             me.gtv1plus2Dvh = DoseVolumeHistogram(gtv1plus2Dose, 0.00001);
             gtv2min1Dose = createImageDataForVoi(subtractVois(me.vois(2).voi,me.vois(1).voi), ...
                                   me.referenceDose);

@@ -116,6 +116,10 @@
       <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
       <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
@@ -141,6 +145,10 @@
           <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
           <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
         </entity.class>
       </entity.package>
     </fileset.classes>
@@ -150,10 +158,6 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getCtScanForPlan.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtDoseForPlan.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtStructForPlan.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtScan.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtSlice.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
