@@ -123,7 +123,7 @@
     </fileset.exports>
     <fileset.classes>
       <entity.package name="">
-        <entity.class name="VoiCreator">
+        <entity.class name="DvhUtilities">
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
           <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
