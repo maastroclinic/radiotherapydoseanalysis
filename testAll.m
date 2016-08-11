@@ -1,54 +1,37 @@
-addpath(genpath('classes'));
 addpath(genpath('dependencies'));
-addpath(genpath('functionsJava'));
-addpath(genpath('testsMatlab'));
-addpath(genpath('testsJava'));
+addpath(genpath('javaInterface'));
+addpath(genpath('testsFunctions'));
+addpath(genpath('tests'));
 %ADD PATH TO DICOM UTILITIES MATLAB HERE!
 % https://dev-git.maastro.nl/projects/DIU/repos/dicomutilitiesmatlab
-addpath(genpath('..\DicomUtilitiesMatlab')); 
+addpath(genpath('dicomutilitiesmatlab'));
+addpath('dicom-file-interface\classes'); 
+addpath('dicom-file-interface\dependencies'); 
+addpath('dicom-file-interface\functions');
 
 
-%% matlab tests
-testCt = testCt();
-resultCt = testCt.run();
+%%
+testVolume = testCalculateVolume();
+resultVolume = testVolume.run();
 
-testCalcGrid = testCalculationGrid();
-resultCalcGrid = testCalcGrid.run();
-
-testDose = testRtDose();
+testDose = testCalculateDose();
 resultDose = testDose.run();
 
-testStruct = testRtStruct();
-resultStruct = testStruct.run();
+testDvhD = testCalculateDvhD();
+resultDvhD = testDvhD.run();
 
-testRoidose = testRoiDose();
-resultRoidose = testRoidose.run();
+testDvhV = testCalculateDvhV();
+resultDvhV = testDvhV.run();
 
-testRoiimage = testRoiImage();
-resultRoiimage = testRoiimage.run();
+testDvhCurve = testCalculateDvhCurve();
+resultDvhCurve = testDvhCurve.run();
 
-testClinCase = testClinicalCase();
-resultClinCase = testClinCase.run();
+testCalc = testCalculations();
+resultCalculations = testCalc.run();
 
-matlabResult = [resultCt,...
-                   resultCalcGrid, ...
-                   resultDose,...
-                   resultStruct,...
-                   resultRoidose,...
-                   resultRoiimage,...
-                   resultClinCase] %#ok<NOPTS> suppress because i want to show result on cmd
-
-%% java tests
-testMatlabObjects = testCreateMatlabDicomObjects();
-resultDicomObjects = testMatlabObjects.run();
-
-testCombineRoi = testCreateCombinedRoiDose();
-resultCombineRoi = testCombineRoi.run();
-
-testCalcWrapper = testAllCalculationWrappers();
-resultWrapper = testCalcWrapper.run();
-
-javaResult = [resultDicomObjects, ...
-                resultCombineRoi,...
-                resultWrapper] %#ok<NOPTS> suppress because i want to show result on cmd
-
+result = [resultVolume, ...
+          resultDose, ...
+          resultDvhD, ...
+          resultDvhV, ...
+          resultDvhCurve, ...
+          resultCalculations]

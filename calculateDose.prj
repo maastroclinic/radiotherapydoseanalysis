@@ -1,0 +1,211 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration file="${PROJECT_ROOT}\radiotherapy-dose-analysis\calculateDose.prj" location="${PROJECT_ROOT}\radiotherapy-dose-analysis" name="calculateDose" target="target.ezdeploy.library" target-name="Library Compiler">
+    <param.appname>calculateDose</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Software Development Team</param.authnamewatermark>
+    <param.email>sdt@maastro.nl</param.email>
+    <param.company>MAASTRO</param.company>
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>\MAASTRO\calculateDose\</param.installpath.string>
+    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes />
+    <param.intermediate>${PROJECT_ROOT}\calculateDose\for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}\calculateDose\for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}\calculateDose\for_redistribution</param.output>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.embed.ctf>true</param.embed.ctf>
+    <param.target.type>subtarget.java.package</param.target.type>
+    <param.support.packages />
+    <param.required.mcr.products>
+      <item>35000</item>
+      <item>35010</item>
+    </param.required.mcr.products>
+    <param.namespace>nl.maastro.calculateDose</param.namespace>
+    <param.classorg />
+    <param.web.mcr>false</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <param.user.only.registration>false</param.user.only.registration>
+    <param.net.framework>option.net.framework.default</param.net.framework>
+    <param.assembly.type>false</param.assembly.type>
+    <param.encryption.key.file />
+    <param.net.enable.remoting>false</param.net.enable.remoting>
+    <param.net.tsa.enable>false</param.net.tsa.enable>
+    <param.net.tsa.assembly />
+    <param.net.tsa.interface />
+    <param.net.tsa.namespace>nl.maastro</param.net.tsa.namespace>
+    <param.net.tsa.superclass>DoseAnalyzer</param.net.tsa.superclass>
+    <param.net.tsa.metadata />
+    <param.net.tsa.metadata.assembly>C:\Users\tim.hendriks\Documents\MATLAB</param.net.tsa.metadata.assembly>
+    <param.net.saved.interface />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.target.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.embed.ctf />
+      <param.support.packages />
+      <param.classorg />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.web.mcr.name />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+      <param.user.only.registration />
+      <param.net.framework />
+      <param.assembly.type />
+      <param.encryption.key.file />
+      <param.net.enable.remoting />
+      <param.net.tsa.enable />
+      <param.net.tsa.assembly />
+      <param.net.tsa.interface />
+      <param.net.tsa.namespace />
+      <param.net.tsa.superclass />
+      <param.net.tsa.metadata />
+      <param.net.tsa.metadata.assembly />
+      <param.net.saved.interface />
+    </unset>
+    <fileset.exports>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Series\Series.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Study\Study.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\utils\moveDataToNewFolder.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
+    </fileset.exports>
+    <fileset.classes>
+      <entity.package name="">
+        <entity.class name="DvhUtilities">
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\utils\moveDataToNewFolder.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Series\Series.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Study\Study.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
+        </entity.class>
+      </entity.package>
+    </fileset.classes>
+    <fileset.resources />
+    <fileset.depfun>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\filesUnderFolders.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getCtScanForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtDoseForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtStructForPlan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtScan.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageFromContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createVolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\matchImageRepresentation.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\createImageFromRtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\determineDoseVectors.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtDose\RtDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\Contour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\ContourSlice.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\RtStruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\isFieldClass.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmax.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmean.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmin.m</file>
+    </fileset.depfun>
+    <fileset.package />
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="doc" optional="false">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\doc</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="calculateDose.jar" optional="false">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\calculateDose.jar</file>
+      <file location="${PROJECT_ROOT}\calculateDose\for_testing" name="readme.txt" optional="true">C:\Users\tim.hendriks\Desktop\radiotherapy-dose-analysis\calculateDose\for_testing\readme.txt</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2015b</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>6.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

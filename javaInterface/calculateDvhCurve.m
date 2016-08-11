@@ -1,20 +1,18 @@
-%IN: binsize | Double | in Gy
-%    absolute| Bool   | true/false
-%OUT: vVolume| Double | vector in cc or %
-%     vDose  | Double | vector in Gy
-function [ vVolume, vDose ] = calculateDvhCurve(roiDose, binsize, absolute)
-
-    vVolume = NaN;
-    vDose   = NaN;
+%%CALCULATEDVHCURVE
+function gtv1Dvh = calculateDvhCurve(doseCube, binSize, relative)   
+    if ~isnumeric(binSize) && length(binSize) == 1
+        throw(MException('calculateDvhCurve:InputTypeMismatch','binSize should be single numeric value'));
+    end
     
+    if ~islogical(relative) && length(relative) == 1
+        throw(MException('calculateDvhCurve:InputTypeMismatch','relative should be single logical'));
+    end
+    
+    %% processing
     try 
-        if absolute
-            [ vVolume, vDose ] = roiDose.exportDoseVolumeHistogramAbsolute(binsize);
-        else
-            [ vVolume, vDose ] = roiDose.exportDoseVolumeHistogram(binsize);
-        end
+        gtv1Dvh = DoseVolumeHistogram(doseCube, binSize);
     catch EM
-        warning('calculateDvhCurve:calculationError', EM.message)
+        warning('calculateDvhCurve:calculationError', EM.message);
     end
 end
 

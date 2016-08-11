@@ -1,9 +1,9 @@
-classdef testImage < matlab.unittest.TestCase
+classdef testCalculations < matlab.unittest.TestCase
 
     properties
 
         % Locations of test files
-        BasePath = 'D:\TestData\12345'
+        BasePath = '\\dev-build.maastro.nl\testdata\DIU\dicomutilitiesmatlab';
         RTStructFile = '\FO-4073997332899944647.dcm';
         RTDoseFile   = '\FO-3153671375338877408_v2.dcm';
         
@@ -49,16 +49,18 @@ classdef testImage < matlab.unittest.TestCase
         mismatchRtDose;
         Gtv1; Gtv2; 
         mismatchGtv1;
+        
+        BINSIZE = 0.001;
     end
     
     methods (TestClassSetup)
-        function setupOnce(me)
-            ct = Ct(fullfile(me.BasePath, 'CT'), 'folder', false);
-            me.calcGrid = CalculationGrid(ct, 'ct');               
-            me.rtDose   = RtDose(fullfile(me.BasePath, 'RTDOSE' , me.RTDoseFile), me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            me.rtStruct = RtStruct(fullfile(me.BasePath, 'RTSTRUCT' , me.RTStructFile), me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            me.Gtv1 = Image('GTV-1', me.rtStruct.getRoiMask('GTV-1'), me.rtDose.fittedDoseCube, me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            me.Gtv2 = Image('GTV-2', me.rtStruct.getRoiMask('GTV-2'), me.rtDose.fittedDoseCube, me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
+        function setupOnce(this)
+            ct = Ct(fullfile(this.BasePath, 'CT'), 'folder', false);
+            this.calcGrid = CalculationGrid(ct, 'ct');               
+            this.rtDose   = RtDose(fullfile(this.BasePath, 'RTDOSE' , this.RTDoseFile), this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            this.rtStruct = RtStruct(fullfile(this.BasePath, 'RTSTRUCT' , this.RTStructFile), this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            this.Gtv1 = Image('GTV-1', this.rtStruct.getRoiMask('GTV-1'), this.rtDose.fittedDoseCube, this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            this.Gtv2 = Image('GTV-2', this.rtStruct.getRoiMask('GTV-2'), this.rtDose.fittedDoseCube, this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
             
 %             ct = Ct(fullfile(me.BasePath, 'CT_DIMTEST'), 'folder', false);
 %             me.mismatchCalcGrid = CalculationGrid(ct, 'ct'); 
@@ -69,83 +71,91 @@ classdef testImage < matlab.unittest.TestCase
     end    
  
     methods(Test)
-        function testParseDoseSeperately(me)
-            Gtv = Image('GTV-1', me.rtStruct.getRoiMask('GTV-1'), [], me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            Gtv = Gtv.addImageData(me.rtDose.fittedDoseCube);
+        function testParseDoseSeperately(this)
+            Gtv = Image('GTV-1', this.rtStruct.getRoiMask('GTV-1'), [], this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            Gtv = Gtv.addImageData(this.rtDose.fittedDoseCube);
             
-            dMin = imageDataStatistics(Gtv.maskedData, 'min');
-            verifyEqual(me, dMin, me.doseMinGtv1, 'RelTol', me.relativeError);
+            dMin = calculateDose(Gtv.maskedData, 'min');
+            verifyEqual(this, dMin, this.doseMinGtv1, 'RelTol', this.relativeError);
             
-            v48 = volumeWithDoseOf(Gtv.maskedData, Gtv.PixelSpacing, 48, true, Gtv.volume);
-            verifyEqual(me, v48, me.volume48GyGtv1, 'RelTol', me.relativeError);            
+            [ vVolume, vDose ] = calculateDvhCurve(Gtv.maskedData, this.BINSIZE, Gtv.PixelSpacing, false, Gtv.volume);
+
+            v48 = calculateDvhV(vVolume, vDose, 48, true, Gtv.volume);
+            verifyEqual(this, v48, this.volume48GyGtv1, 'RelTol', this.relativeError);            
             
-            d2 = doseToCertainVolume(Gtv.maskedData, Gtv.PixelSpacing, 2, true, Gtv.volume, false, []);
-            verifyEqual(me, d2, me.dose2PercentGtv1, 'RelTol', me.relativeError);
+            d2 = calculateDvhD(vVolume, vDose, 2, true, Gtv.volume, false, []);
+            verifyEqual(this, d2, this.dose2PercentGtv1, 'RelTol', this.relativeError);
         end
         
-        function testCtVolumeGtv1(me)
-            ct = Ct(fullfile(me.BasePath, 'CT'), 'folder', true);
-            GtvCt =Image('GTV-1', me.rtStruct.getRoiMask('GTV-1'), ct.imageData, me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            verifyEqual(me, double(~isnan(GtvCt.maskedData)), GtvCt.bitmask);
+        function testCtVolumeGtv1(this)
+            ct = Ct(fullfile(this.BasePath, 'CT'), 'folder', true);
+            GtvCt =Image('GTV-1', this.rtStruct.getRoiMask('GTV-1'), ct.imageData, this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            verifyEqual(this, double(~isnan(GtvCt.maskedData)), GtvCt.bitmask);
         end
         
-        function testGtv1(me)
-            verifyEqual(me, me.Gtv1.name, 'GTV-1'); 
-            verifyEqual(me, me.Gtv1.volume, me.volumeGtv1, 'RelTol', me.relativeError); 
+        function testGtv1(this)
+            verifyEqual(this, this.Gtv1.name, 'GTV-1'); 
+            verifyEqual(this, this.Gtv1.volume, this.volumeGtv1, 'RelTol', this.relativeError); 
             
-            dMin = imageDataStatistics(me.Gtv1.maskedData, 'min');
-            verifyEqual(me, dMin, me.doseMinGtv1, 'RelTol', me.relativeError);    
+            dMin = calculateDose(this.Gtv1.maskedData, 'min');
+            verifyEqual(this, dMin, this.doseMinGtv1, 'RelTol', this.relativeError);    
             
-            dMean = imageDataStatistics(me.Gtv1.maskedData, 'mean');
-            verifyEqual(me, dMean, me.doseMeanGtv1, 'RelTol', me.relativeError);
-            verifyGreaterThanOrEqual(me, dMean, dMin); 
+            dMean = calculateDose(this.Gtv1.maskedData, 'mean');
+            verifyEqual(this, dMean, this.doseMeanGtv1, 'RelTol', this.relativeError);
+            verifyGreaterThanOrEqual(this, dMean, dMin); 
             
-            dMax = imageDataStatistics(me.Gtv1.maskedData, 'max');
-            verifyEqual(me, dMax, me.doseMaxGtv1, 'RelTol', me.relativeError);             
-            verifyGreaterThanOrEqual(me, dMax, dMean);
+            dMax = calculateDose(this.Gtv1.maskedData, 'max');
+            verifyEqual(this, dMax, this.doseMaxGtv1, 'RelTol', this.relativeError);             
+            verifyGreaterThanOrEqual(this, dMax, dMean);
             
-            v48 = volumeWithDoseOf(me.Gtv1.maskedData, me.Gtv1.PixelSpacing, 48, true, me.Gtv1.volume);
-            verifyEqual(me, v48, me.volume48GyGtv1, 'RelTol', me.relativeError);            
+            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv1.maskedData, this.BINSIZE, this.Gtv1.PixelSpacing, false, this.Gtv1.volume);
             
-            d2 = doseToCertainVolume(me.Gtv1.maskedData, me.Gtv1.PixelSpacing, 2, true, me.Gtv1.volume, false, []);
-            verifyEqual(me, d2, me.dose2PercentGtv1, 'RelTol', me.relativeError);
+            v48 = calculateDvhV(vVolume, vDose, 48, true, this.Gtv1.volume);
+            verifyEqual(this, v48, this.volume48GyGtv1, 'RelTol', this.relativeError);            
+            
+            d2 = calculateDvhD(vVolume, vDose, 2, true, this.Gtv1.volume, false, []);
+            verifyEqual(this, d2, this.dose2PercentGtv1, 'RelTol', this.relativeError);
             
             
         end
 
-        function testGtv2(me)
-            verifyEqual(me, me.Gtv2.name, 'GTV-2'); 
-            verifyEqual(me, me.Gtv2.volume, me.volumeGtv2, 'RelTol', me.relativeError);
+        function testGtv2(this)
+            verifyEqual(this, this.Gtv2.name, 'GTV-2'); 
+            verifyEqual(this, this.Gtv2.volume, this.volumeGtv2, 'RelTol', this.relativeError);
             
-            dMin = imageDataStatistics(me.Gtv2.maskedData, 'min');
-            verifyEqual(me, dMin, me.doseMinGtv2, 'RelTol', me.relativeError);
+            dMin = calculateDose(this.Gtv2.maskedData, 'min');
+            verifyEqual(this, dMin, this.doseMinGtv2, 'RelTol', this.relativeError);
             
-            v48 = volumeWithDoseOf(me.Gtv2.maskedData, me.Gtv2.PixelSpacing, 48, true, me.Gtv2.volume);
-            verifyEqual(me, v48, me.volume48GyGtv2, 'RelTol', me.relativeError); 
+            [ vVolume, vDose ] = calculateDvhCurve(this.Gtv2.maskedData, this.BINSIZE, this.Gtv2.PixelSpacing, false, this.Gtv2.volume);
             
-            d2 = doseToCertainVolume(me.Gtv2.maskedData, me.Gtv2.PixelSpacing, 2, true, me.Gtv2.volume, false, []);
-            verifyEqual(me, d2, me.dose2PercentGtv2, 'RelTol', me.relativeError); 
+            v48 = calculateDvhV(vVolume, vDose, 48, true, this.Gtv2.volume);
+            verifyEqual(this, v48, this.volume48GyGtv2, 'RelTol', this.relativeError); 
+            
+            d2 = calculateDvhD(vVolume, vDose, 2, true, this.Gtv2.volume, false, []);
+            verifyEqual(this, d2, this.dose2PercentGtv2, 'RelTol', this.relativeError); 
         end
 
-        function testOperatorsSum(me)
-            sum = me.Gtv1 + me.Gtv2;            
-            verifyEqual(me, sum.name, 'GTV-1+GTV-2'); 
+        function testOperatorsSum(this)
+            sum = this.Gtv1 + this.Gtv2;            
+            verifyEqual(this, sum.name, 'GTV-1+GTV-2'); 
             
-            dMean = imageDataStatistics(sum.maskedData, 'mean');
-            verifyEqual(me, dMean, me.doseMeanSum, 'RelTol', me.relativeError);
+            dMean = calculateDose(sum.maskedData, 'mean');
+            verifyEqual(this, dMean, this.doseMeanSum, 'RelTol', this.relativeError);
             
-            v48 = volumeWithDoseOf(sum.maskedData, sum.PixelSpacing, 48, true, sum.volume);
-            verifyEqual(me, v48, me.volume48GySum, 'RelTol', me.relativeError);            
+            [ vVolume, vDose ] = calculateDvhCurve(sum.maskedData, this.BINSIZE, sum.PixelSpacing, false, sum.volume);
             
-            d2 = doseToCertainVolume(sum.maskedData, sum.PixelSpacing, 2, true, sum.volume, false, []);
-            verifyEqual(me, d2, me.dose2PercentSum, 'RelTol', me.relativeError); 
+            v48 = calculateDvhV(vVolume, vDose, 48, true, sum.volume);
+            verifyEqual(this, v48, this.volume48GySum, 'RelTol', this.relativeError);            
+            
+            d2 = calculateDvhD(vVolume, vDose, 2, true, sum.volume, false, []);
+            verifyEqual(this, d2, this.dose2PercentSum, 'RelTol', this.relativeError); 
         end
 
-        function testOperatorsDifference(me)
-            sum = me.Gtv1 + me.Gtv2;
-            difference = sum - me.Gtv1;
-            verifyEqual(me, difference.name, 'GTV-1+GTV-2-GTV-1'); 
-            verifyEqual(me, difference.volume, me.volumeDifference, 'RelTol', me.relativeError);           
+        function testOperatorsDifference(this)
+            sum = this.Gtv1 + this.Gtv2;
+            difference = sum - this.Gtv1;
+            verifyEqual(this, difference.name, 'GTV-1+GTV-2-GTV-1'); 
+            verifyEqual(this, difference.volume, this.volumeDifference, 'RelTol', this.relativeError);           
             
 %             doseMax = difference.dose('max');
 %             verifyEqual(me, doseMax, me.doseMaxDifference, 'RelTol', me.relativeError); 
@@ -153,9 +163,9 @@ classdef testImage < matlab.unittest.TestCase
 %             verifyEqual(me, me.dose2PercentDifference, difference.doseToCertainVolumePercentage(2), 'RelTol', me.relativeError);
         end
         
-        function testCompressionCloseToCtBoundries(me)
-            body = Image('Body', me.rtStruct.getRoiMask('Body'), me.rtDose.fittedDoseCube, me.calcGrid.PixelSpacing, me.calcGrid.Origin, me.calcGrid.Axis, me.calcGrid.Dimensions);
-            verifyEqual(me, body.volume, me.bodyVolume, 'RelTol', me.relativeError);
+        function testCompressionCloseToCtBoundries(this)
+            body = Image('Body', this.rtStruct.getRoiMask('Body'), this.rtDose.fittedDoseCube, this.calcGrid.PixelSpacing, this.calcGrid.Origin, this.calcGrid.Axis, this.calcGrid.Dimensions);
+            verifyEqual(this, body.volume, this.bodyVolume, 'RelTol', this.relativeError);
         end
         
 %         function testDoseOverwrite(me)
