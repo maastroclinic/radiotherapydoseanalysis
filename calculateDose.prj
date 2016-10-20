@@ -114,6 +114,7 @@
       <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createRtStruct.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
       <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
@@ -145,6 +146,7 @@
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createRtStruct.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
           <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
