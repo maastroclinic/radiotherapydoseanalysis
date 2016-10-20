@@ -111,7 +111,6 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
       <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createRtStruct.m</file>
@@ -127,7 +126,6 @@
       <entity.package name="">
         <entity.class name="DvhUtilities">
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
