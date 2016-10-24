@@ -12,7 +12,7 @@
     <scm>
         <developerConnection>scm:git:http://fs-bitbucket-01/scm/diu/radiotherapy-dose-analysis.git</developerConnection>
         <url>https://fs-bitbucket-01/scm/diu/radiotherapy-dose-analysis.git</url>
-        <tag>HEAD</tag>
+        <tag>1.1.0</tag>
     </scm>
 
     <properties>
@@ -24,7 +24,7 @@
     <!-- bamboo project including prefix nl.maastro -->
     <groupId>nl.maastro</groupId>
     <artifactId>radiotherapydoseanalysis</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <description />
     
     <build>
