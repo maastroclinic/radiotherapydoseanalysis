@@ -103,7 +103,7 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogram.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
@@ -111,9 +111,9 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\orderStructureArray.m</file>
       <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
-      <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createRtStruct.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
       <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
@@ -126,10 +126,9 @@
       <entity.package name="">
         <entity.class name="DvhUtilities">
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
-          <file>${PROJECT_ROOT}\javaInterface\calculateDvhCurve.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
-          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\createDoseVolumeHistogramDto.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogram.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
@@ -145,6 +144,7 @@
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createReferenceDose.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createVoiMap.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createRtStruct.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
           <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
