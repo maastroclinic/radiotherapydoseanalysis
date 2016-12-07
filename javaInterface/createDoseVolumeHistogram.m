@@ -10,26 +10,34 @@ function dvhJson = createDoseVolumeHistogram(rtStruct, ...
                                              roiNames, ...
                                              operators, ...
                                              binSize) 
-    
-    contour = createContour(rtStruct, roiNames{1});
-    voi = createVolumeOfInterest(contour, referenceImage);
-    combinedVoi = voi;
-    
-    for i = 2:length(roiNames)
-        try
-            contour = createContour(rtStruct, roiNames{i});
-            voi = createVolumeOfInterest(contour, referenceImage);
-            isValidVoi(voi,roiNames{i})
-            combinedVois = combineVois(combinedVois, voi, operators{i - 1});
-        catch
-            dvhJson = createDoseVolumeHistogramDto(DoseVolumeHistogram());
-            warning('dataWrapper:createDvh', ['Could not generate bitmask for ROI ' roiNames{i}])
-            return;
+    try
+        contour = createContour(rtStruct, roiNames{1});
+        voi = createVolumeOfInterest(contour, referenceImage);
+        combinedVoi = voi;
+
+        for i = 2:length(roiNames)
+
+                contour = createContour(rtStruct, roiNames{i});
+                voi = createVolumeOfInterest(contour, referenceImage);
+                isValidVoi(voi,roiNames{i})
+                combinedVois = combineVois(combinedVois, voi, operators{i - 1});
+
         end
+    catch
+        dvhJson = createDoseVolumeHistogramDto(DoseVolumeHistogram());
+        warning('dataWrapper:createDvh', ['Could not generate bitmask for ROI ' roiNames{i}])
+        return;
     end
-    doseVoi = createImageDataForVoi(combinedVoi, referenceDose);
-    dvh = DoseVolumeHistogram(doseVoi, binSize);
-    dvhJson = createDoseVolumeHistogramDto(dvh);
+    
+    try
+        doseVoi = createImageDataForVoi(combinedVoi, referenceDose);
+        dvh = DoseVolumeHistogram(doseVoi, binSize);
+        dvhJson = createDoseVolumeHistogramDto(dvh);
+     catch
+        dvhJson = createDoseVolumeHistogramDto(DoseVolumeHistogram());
+        warning('dataWrapper:createDvh', 'something went wrong will applying dose to VOI')
+        return;
+    end
 end
 
 function combinedVoi = combineVois(combinedVoi, voi, operator)
