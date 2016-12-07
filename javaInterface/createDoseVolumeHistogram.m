@@ -14,7 +14,7 @@ function dvhJson = createDoseVolumeHistogram(rtStruct, ...
         combinedVoi = combineVoisFromJava( rtStruct, roiNames, operators, referenceImage );
     catch
         dvhJson = createDoseVolumeHistogramDto(DoseVolumeHistogram());
-        warning('dataWrapper:createDvh', ['Could not generate bitmask for ROI ' roiNames{i}])
+        warning('dataWrapper:createDvh', 'Could not generate bitmask for ROIs ')
         return;
     end
     

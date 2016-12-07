@@ -3,7 +3,7 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         
         % Locations of test files
         % BasePath should be the path to the folder containing the CT, RTSTRUCT and RTDOSE folders
-        BasePath = '\\dev-build.maastro.nl\testdata\DIU\dicomutilitiesmatlab';
+        BasePath = 'D:\LocalData\TestData\12345_java';
         % Filenames should hold the filename of the RTSTRUCT file and RTDOSE file
         RTStructFile = 'FO-4073997332899944647.dcm';
         RTDoseFile   = 'FO-3153671375338877408_v2.dcm';
@@ -14,24 +14,18 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         pathDose = [];
         pathStruct = [];
         referenceImage = [];
-        vois = [];
-        referenceDose = [];
-        gtv1Dvh = [];
-        gtv1plus2Dvh = [];
-        gtv2min1Dvh = [];
-        
+        rtStruct = [];
+
         %wrapper operation instructions
         V_LIMIT = 48;
         D_LIMIT = 2;
         D_LIMIT_ABS = 0;
         TARGET_PRESCRIPTION_DOSE    = 45;
         RTVOLUME_EXPORT  = 'export';
-        DVH_BINSIZE      = 1 %Gy
-        
-        doseOperations = [];
-        requiredOutput = [];
+        DVH_BINSIZE      = 0.001 %Gy
         
         % Results
+        maxDose = 50.7382;
         volumeGTV1 = 57.7583;
         volume48GyGTV1 = 70.5122;
         dose2PercentGTV1 = 49.9198; 
@@ -58,79 +52,84 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         doseMeanDifference = 46.5159;
 
         relativeError = 0.0035;
-
-        % Required for setup
-        wrapperData;
-        wrapperDataNoDose;
     end
     
     methods (TestClassSetup)
-        function setupOnce(me)       
-            me.ctJava = mockJavaCtProperties(fullfile(me.BasePath, 'CT'));
-            me.pathCt =     fullfile(me.BasePath, 'CT');
-            me.pathDose   = fullfile(me.BasePath, 'RTDOSE' , me.RTDoseFile);
-            me.pathStruct = fullfile(me.BasePath, 'RTSTRUCT' , me.RTStructFile);
-            me.referenceImage = createImageFromCtProperties(me.ctJava);
-            
-            me.vois = createVoiMap(me.pathStruct, ...
-                            me.referenceImage, ...
-                            {'GTV-1','GTV-2'});
-            me.referenceDose = createReferenceDose(me.pathDose, ...
-                                                 me.referenceImage);
-                                             
-            gtv1Dose = createImageDataForVoi(me.vois(1).voi, ...
-                                              me.referenceDose);
-            me.gtv1Dvh = DoseVolumeHistogram(gtv1Dose, 0.00001);
-            gtv1plus2Dose = createImageDataForVoi(addVois(me.vois(1).voi,me.vois(2).voi), ...
-                                  me.referenceDose);
-            me.gtv1plus2Dvh = DoseVolumeHistogram(gtv1plus2Dose, 0.00001);
-            gtv2min1Dose = createImageDataForVoi(subtractVois(me.vois(2).voi,me.vois(1).voi), ...
-                                  me.referenceDose);
-            me.gtv2min1Dvh = DoseVolumeHistogram(gtv2min1Dose, 0.00001);
+        function setupOnce(this)       
+            this.ctJava = mockJavaCtProperties(fullfile(this.BasePath, 'CT'));
+            this.pathCt =     fullfile(this.BasePath, 'CT');
+            this.pathDose   = fullfile(this.BasePath, 'RTDOSE' , this.RTDoseFile);
+            this.pathStruct = fullfile(this.BasePath, 'RTSTRUCT' , this.RTStructFile);
+            this.referenceImage = createImageFromCtProperties(this.ctJava);
+            this.rtStruct = createRtStruct(this.pathStruct);
         end
     end    
     
     methods(Test)
-        function testCreateDoseVolumeHistogram(me)                         
-            rtStruct = createRtStruct(me.pathStruct);
-            dvhJson = createDoseVolumeHistogram(rtStruct, ... 
-                                             me.referenceDose, ...
-                                             me.referenceImage, ...
+        function testCreateReferenceDose(this)
+            referenceDose = createReferenceDose(this.pathDose, this.referenceImage);
+            verifyEqual(this, max(referenceDose.pixelData(:)), this.maxDose, 'RelTol', this.relativeError);
+        end
+        
+        function testCreateDoseVolumeHistogram(this)                         
+            referenceDose = createReferenceDose(this.pathDose, this.referenceImage);
+            createDoseVolumeHistogram(this.rtStruct, ... 
+                                             referenceDose, ...
+                                             this.referenceImage, ...
                                              {'GTV-1'}, ...
                                              {}, ...
                                              0.01);
         end
         
-		function testCalculateVolume(me)
-            verifyEqual(me, me.gtv1Dvh.volume, me.volumeGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv1plus2Dvh.volume, me.volumeSum, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv2min1Dvh.volume, me.volumeDifference, 'RelTol', me.relativeError);
+        function testGtv1(this)
+            referenceDose = createReferenceDose(this.pathDose, this.referenceImage);
+            dvhDto = createDoseVolumeHistogram(this.rtStruct, ...
+                referenceDose, ...
+                this.referenceImage, ...
+                {'GTV-1'}, ...
+                {}, ...
+                this.DVH_BINSIZE);
+            gtv1Dvh = createDoseVolumeHistogramFromDto(dvhDto);
+            verifyEqual(this, gtv1Dvh.volume, this.volumeGTV1, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1Dvh.minDose, this.doseMinGTV1, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1Dvh.meanDose, this.doseMeanGTV1, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1Dvh.maxDose, this.doseMaxGTV1, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhV(gtv1Dvh, this.V_LIMIT, true), this.volume48GyGTV1, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhD(gtv1Dvh, this.D_LIMIT, '%', []), this.dose2PercentGTV1, 'RelTol', this.relativeError);
         end
         
-        function testCalculateDose(me)
-            verifyEqual(me, me.gtv1Dvh.minDose, me.doseMinGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv1plus2Dvh.minDose, me.doseMinSum, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv2min1Dvh.minDose, me.doseMinDifference, 'RelTol', me.relativeError);
-            
-            verifyEqual(me, me.gtv1Dvh.meanDose, me.doseMeanGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv1plus2Dvh.meanDose, me.doseMeanSum, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv2min1Dvh.meanDose, me.doseMeanDifference, 'RelTol', me.relativeError);
-            
-            verifyEqual(me, me.gtv1Dvh.maxDose, me.doseMaxGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv1plus2Dvh.maxDose, me.doseMaxSum, 'RelTol', me.relativeError);
-            verifyEqual(me, me.gtv2min1Dvh.maxDose, me.doseMaxDifference, 'RelTol', me.relativeError);
+        function testGtv1PlusGtv2(this)
+            referenceDose = createReferenceDose(this.pathDose, this.referenceImage);
+            dvhDto = createDoseVolumeHistogram(this.rtStruct, ...
+                referenceDose, ...
+                this.referenceImage, ...
+                {'GTV-1', 'GTV-2'}, ...
+                {'+'}, ...
+                this.DVH_BINSIZE);
+            gtv1plus2Dvh = createDoseVolumeHistogramFromDto(dvhDto);
+            verifyEqual(this, gtv1plus2Dvh.volume, this.volumeSum, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1plus2Dvh.minDose, this.doseMinSum, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1plus2Dvh.meanDose, this.doseMeanSum, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv1plus2Dvh.maxDose, this.doseMaxSum, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhV(gtv1plus2Dvh, this.V_LIMIT, true), this.volume48GySum, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhD(gtv1plus2Dvh, this.D_LIMIT, '%', []), this.dose2PercentSum, 'RelTol', this.relativeError);
         end
         
-        function testCalculateDvhV(me)
-            verifyEqual(me, calculateDvhV(me.gtv1Dvh, me.V_LIMIT, true), me.volume48GyGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhV(me.gtv1plus2Dvh, me.V_LIMIT, true), me.volume48GySum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhV(me.gtv2min1Dvh, me.V_LIMIT, true), me.volume48GyDifference, 'RelTol', me.relativeError);
-        end
-        
-        function testCalculateDvhD(me)  
-            verifyEqual(me, calculateDvhD(me.gtv1Dvh, me.D_LIMIT, '%', []), me.dose2PercentGTV1, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhD(me.gtv1plus2Dvh, me.D_LIMIT, '%', []), me.dose2PercentSum, 'RelTol', me.relativeError);
-            verifyEqual(me, calculateDvhD(me.gtv2min1Dvh, me.D_LIMIT, '%', []), me.dose2PercentDifference, 'RelTol', me.relativeError);
+        function testGtv1MinusGtv2(this)
+            referenceDose = createReferenceDose(this.pathDose, this.referenceImage);
+            dvhDto = createDoseVolumeHistogram(this.rtStruct, ...
+                referenceDose, ...
+                this.referenceImage, ...
+                {'GTV-2', 'GTV-1'}, ...
+                {'-'}, ...
+                this.DVH_BINSIZE);
+            gtv2min1Dvh = createDoseVolumeHistogramFromDto(dvhDto);
+            verifyEqual(this, gtv2min1Dvh.volume, this.volumeDifference, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv2min1Dvh.minDose, this.doseMinDifference, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv2min1Dvh.meanDose, this.doseMeanDifference, 'RelTol', this.relativeError);
+            verifyEqual(this, gtv2min1Dvh.maxDose, this.doseMaxDifference, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhV(gtv2min1Dvh, this.V_LIMIT, true), this.volume48GyDifference, 'RelTol', this.relativeError);
+            verifyEqual(this, calculateDvhD(gtv2min1Dvh, this.D_LIMIT, '%', []), this.dose2PercentDifference, 'RelTol', this.relativeError);
         end
     end
 end

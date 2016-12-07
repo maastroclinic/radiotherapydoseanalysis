@@ -4,12 +4,10 @@ function combinedVoi = combineVoisFromJava( rtStruct, roiNames, operators, refer
     combinedVoi = voi;
 
     for i = 2:length(roiNames)
-
         contour = createContour(rtStruct, roiNames{i});
         voi = createVolumeOfInterest(contour, referenceImage);
         isValidVoi(voi,roiNames{i})
-        combinedVois = combineVois(combinedVois, voi, operators{i - 1});
-
+        combinedVoi = combineVois(combinedVoi, voi, operators{i - 1});
     end
 end
 
