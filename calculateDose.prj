@@ -158,6 +158,8 @@
     </fileset.classes>
     <fileset.resources />
     <fileset.depfun>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogramNoDose.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\filesUnderFolders.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getCtScanForPlan.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\getRtDoseForPlan.m</file>
