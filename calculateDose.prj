@@ -130,6 +130,7 @@
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogram.m</file>
+          <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogramNoDose.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\Patient\createPlanPackage.m</file>
@@ -149,9 +150,9 @@
           <file>${PROJECT_ROOT}\javaInterface\createDataStructure.m</file>
           <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
         </entity.class>
       </entity.package>
     </fileset.classes>
@@ -181,6 +182,10 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmax.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmean.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\utils\nanmin.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\jsonopt.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\mergestruct.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\savejson.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\jsonlab\varargin2struct.m</file>
     </fileset.depfun>
     <fileset.package />
     <build-deliverables>
