@@ -104,6 +104,7 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCtProperties.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\createModalityObj.m</file>
       <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogram.m</file>
+      <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogramNoDose.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageDataForVoi.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtImage\RtImage.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtPlan\RtPlan.m</file>
@@ -127,6 +128,7 @@
         <entity.class name="DvhUtilities">
           <file>${PROJECT_ROOT}\dicom-file-interface\HierarchyStructure\DicomDatabase\addNewFolderToDatabase.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
+          <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogramNoDose.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\RtStruct\createContour.m</file>
           <file>${PROJECT_ROOT}\javaInterface\createDoseVolumeHistogram.m</file>
           <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\createImageFromCt.m</file>
@@ -164,7 +166,6 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtSlice.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DoseVolumeHistogram\DoseVolumeHistogram.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createImageFromContour.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\createVolumeOfInterest.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
