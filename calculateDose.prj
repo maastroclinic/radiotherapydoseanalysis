@@ -163,7 +163,7 @@
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\CtScan\CtSlice.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\constructorParser.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\DicomObj\DicomObj.m</file>
-      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest\createImageFromContour.m</file>
+      <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest\createEmptyImageFromContour.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\VolumeOfInterest\createVolumeOfInterest.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\Image.m</file>
       <file>${PROJECT_ROOT}\dicom-file-interface\ModalityStructure\Image\matchImageRepresentation.m</file>
