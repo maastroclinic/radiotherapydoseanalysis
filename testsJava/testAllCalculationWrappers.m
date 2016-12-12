@@ -3,7 +3,7 @@ classdef testAllCalculationWrappers < matlab.unittest.TestCase
         
         % Locations of test files
         % BasePath should be the path to the folder containing the CT, RTSTRUCT and RTDOSE folders
-        BasePath = 'D:\LocalData\TestData\12345_java';
+        BasePath = '\\dev-build.maastro.nl\testdata\DIU\dicomutilitiesmatlab';
         % Filenames should hold the filename of the RTSTRUCT file and RTDOSE file
         RTStructFile = 'FO-4073997332899944647.dcm';
         RTDoseFile   = 'FO-3153671375338877408_v2.dcm';
