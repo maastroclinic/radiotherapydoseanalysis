@@ -109,7 +109,7 @@
       <file>${PROJECT_ROOT}\javaInterface\subtractVois.m</file>
     </fileset.exports>
     <fileset.classes>
-      <entity.package name="">
+      <entity.package name="nl.maastro">
         <entity.class name="DvhUtilities">
           <file>${PROJECT_ROOT}\javaInterface\addVois.m</file>
           <file>${PROJECT_ROOT}\javaInterface\combineVoisFromJava.m</file>
