@@ -17,7 +17,7 @@
 
     <properties>
         <!-- as configured in matlab -->
-        <matlab.jar.package>nl.maastro.calculateDose</matlab.jar.package>
+        <matlab.jar.package>calculateDose</matlab.jar.package>
         <matlab.jar.name>calculateDose.jar</matlab.jar.name>
     </properties>
 
