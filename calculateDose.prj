@@ -28,7 +28,7 @@
       <item>35000</item>
       <item>35010</item>
     </param.required.mcr.products>
-    <param.namespace />
+    <param.namespace>nl.maastro.calculateDose</param.namespace>
     <param.classorg />
     <param.web.mcr>true</param.web.mcr>
     <param.package.mcr>false</param.package.mcr>
@@ -92,7 +92,7 @@
       <param.net.tsa.enable />
       <param.net.tsa.assembly />
       <param.net.tsa.interface />
-      <param.net.tsa.namespace />
+      <param.net.tsa.namespace>nl.maastro</param.net.tsa.namespace>
       <param.net.tsa.superclass />
       <param.net.tsa.metadata />
       <param.net.tsa.metadata.assembly />
