@@ -47,7 +47,7 @@
     <param.net.tsa.enable>false</param.net.tsa.enable>
     <param.net.tsa.assembly />
     <param.net.tsa.interface />
-    <param.net.tsa.namespace />
+    <param.net.tsa.namespace>nl.maastro</param.net.tsa.namespace>
     <param.net.tsa.superclass>DvhUtilities</param.net.tsa.superclass>
     <param.net.tsa.metadata />
     <param.net.tsa.metadata.assembly>C:\Users\tim.hendriks\Documents\MATLAB</param.net.tsa.metadata.assembly>
@@ -73,7 +73,7 @@
       <param.user.defined.mcr.options />
       <param.embed.ctf />
       <param.support.packages />
-      <param.namespace />
+      <param.namespace>nl.maastro.calculateDose</param.namespace>
       <param.classorg />
       <param.web.mcr />
       <param.package.mcr />
